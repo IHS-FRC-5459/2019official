@@ -17,7 +17,9 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 public class ultrasonic extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  AnalogInput exampleAnalog = new AnalogInput(0);
+  
+  AnalogInput exampleAnalog ;
+
   public ultrasonic () 
   {
     //AnalogInput ai;
@@ -25,7 +27,7 @@ public class ultrasonic extends Subsystem {
     int bits;
     
     //example
-    exampleAnalog = new AnalogInput(0);
+    exampleAnalog = new AnalogInput(1);
     // int bits;
      exampleAnalog.setOversampleBits(4);
     bits = exampleAnalog.getOversampleBits();
@@ -43,14 +45,16 @@ public class ultrasonic extends Subsystem {
   
   public double getVoltage() {
    double volts;
-   exampleAnalog = new AnalogInput(0);
+  // exampleAnalog = new AnalogInput(1);
    volts = exampleAnalog.getVoltage();
+   System.out.println("volts is: "+ volts);
    return volts;
   }
   public double getAvgVoltage() {
     double volts;
-    exampleAnalog = new AnalogInput(0);
+    //exampleAnalog = new AnalogInput(0);
     volts = exampleAnalog.getAverageVoltage();
+    System.out.println("avg volts is: "+ volts);
     return volts;
    }
   @Override

@@ -110,15 +110,19 @@ public class Robot extends TimedRobot {
         if (autonomousCommand != null) autonomousCommand.cancel();
         System.out.println("teleopInit being called");
         Robot.drive.setDefaultCommand(new DriveCommand());
-        SmartDashboard.putNumber("ultrasonic avg voltage", Robot.ultrasonic.getAvgVoltage());
-        SmartDashboard.putNumber("ultrasonic voltage", Robot.ultrasonic.getVoltage());
+        
     }
-
     /**
      * This function is called periodically during operator control
+     * SmartDashboard.putNumber("ultrasonic avg voltage", Robot.ultrasonic.getAvgVoltage());
+        SmartDashboard.putNumber("ultrasonic voltage", Robot.ultrasonic.getVoltage());
+    
      */
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        SmartDashboard.putNumber("ultrasonic avg voltage", Robot.ultrasonic.getAvgVoltage());
+        SmartDashboard.putNumber("ultrasonic voltage", Robot.ultrasonic.getVoltage());
+    
     }
 }
