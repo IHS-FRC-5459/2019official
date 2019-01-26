@@ -44,7 +44,7 @@ public class DriveCommand extends Command {
     @Override
     protected void execute() {
         Robot.drive.setLeft(Robot.oi.joystick1.getY());
-        //System.out.println("left is "+Robot.oi.joystick1.getY());
+        System.out.println("left is "+Robot.oi.joystick1.getY());
         Robot.drive.setRight(Robot.oi.joystick2.getY());
     }
 
