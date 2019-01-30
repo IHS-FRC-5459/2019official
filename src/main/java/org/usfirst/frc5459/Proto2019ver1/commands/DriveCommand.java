@@ -43,9 +43,14 @@ public class DriveCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
+        if(Math.abs(Robot.oi.joystick1.getY())   >= .03){
         Robot.drive.setLeft(Robot.oi.joystick1.getY());
-        System.out.println("left is "+Robot.oi.joystick1.getY());
-        Robot.drive.setRight(Robot.oi.joystick2.getY());
+        }
+        //System.out.println("joystick 1 is: "+Robot.oi.joystick1.getY());
+        if(Math.abs(Robot.oi.joystick2.getY()) >= .03){
+            Robot.drive.setRight(Robot.oi.joystick2.getY());
+            }
+        
     }
 
     // Make this return true when this Command no longer needs to run execute()

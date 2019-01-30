@@ -33,19 +33,17 @@ public class FlipCommand extends Command {
       Robot.flipped = false;
       SwitchToCamera2.start();
     } 
-    else if(Robot.flipped == false) {
+    else  {
       Robot.flipped = true;
       SwitchToCamera1.start();
-    } else {
-      System.out.println("flipcomannd: error with flipped value, not set");
-    }
+    } 
     
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
