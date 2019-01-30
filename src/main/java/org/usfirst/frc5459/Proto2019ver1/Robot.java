@@ -74,7 +74,7 @@ public class Robot extends TimedRobot {
         flipped = false;
         server.setSource(camera1);
         vexGyro = new AnalogGyro(0);
-        Robot.vexGyro.setSensitivity(.00175);
+        vexGyro.setSensitivity(.00175);
         rightEncoder = new Encoder(0, 1, false);
         leftEncoder = new Encoder(2, 3, true);
         // Add commands to Autonomous Sendable Chooser
@@ -103,10 +103,10 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-    //    autonomousCommand = chooser.getSelected();
+        autonomousCommand = chooser.getSelected();
         // schedule the autonomous command (example)
         
-        autonomousCommand = new DriveToEncoderDistance(1, 0.25);
+        autonomousCommand = new TurnToGyroCommand(-1);
         if (autonomousCommand != null) autonomousCommand.start();
     }
 
@@ -116,6 +116,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+
     }
 
     @Override
