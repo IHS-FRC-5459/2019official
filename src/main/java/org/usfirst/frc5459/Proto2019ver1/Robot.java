@@ -71,7 +71,7 @@ public class Robot extends TimedRobot {
         camera1 = CameraServer.getInstance().startAutomaticCapture(0);
         camera2 = CameraServer.getInstance().startAutomaticCapture(1);
         server = CameraServer.getInstance().getServer();
-        flipped = true;
+        flipped = false;
         server.setSource(camera1);
         vexGyro = new AnalogGyro(0);
         Robot.vexGyro.setSensitivity(.00175);
