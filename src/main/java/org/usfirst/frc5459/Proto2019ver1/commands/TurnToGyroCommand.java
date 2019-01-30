@@ -40,7 +40,7 @@ public class TurnToGyroCommand extends Command {
     double Zangle = Robot.vexGyro.getAngle() ;
 
     //calculate yaw angle remaining
-    double AbsYawAngleRemaining = Math.abs(YawTarget - Robot.vexGyro.getAngle());
+    double AbsYawAngleRemaining = Math.abs(YawTarget - (-1 * Robot.vexGyro.getAngle()));
     System.out.println("Z:" + Zangle + " Target: " + YawTarget + " Remaining"+AbsYawAngleRemaining);
     //if less than a degree, rotation is done
     if(AbsYawAngleRemaining < 12){
