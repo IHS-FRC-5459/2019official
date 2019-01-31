@@ -22,6 +22,7 @@ public class DriveToEncoderDistance extends Command {
   public DriveToEncoderDistance(double Distance, double Intensity) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.drive);
     this.targetDistance = Distance;
     this.targetIntensity = Intensity;
   }
@@ -29,8 +30,8 @@ public class DriveToEncoderDistance extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.rightEncoder.reset();
-    Robot.leftEncoder.reset();
+    Robot.drive.resetEncoders();
+    
     finished = false;
   }
 
@@ -40,7 +41,7 @@ public class DriveToEncoderDistance extends Command {
     double yaw = Robot.vexGyro.getAngle();
     double yawIntensity = yaw / 50;
     
-    double averageDistance = ((Robot.leftEncoder.getDistance() + Robot.rightEncoder.getDistance()) / 2);
+    double averageDistance = ((Robot.drive.getLeftEncoder() + Robot.drive.getRightEncoder())) / 2);
     
     double distanceRemaining = targetDistance - averageDistance;
 
