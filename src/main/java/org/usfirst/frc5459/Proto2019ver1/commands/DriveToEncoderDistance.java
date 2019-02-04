@@ -19,11 +19,13 @@ public class DriveToEncoderDistance extends Command {
   double targetIntensity;
   //CALCULATE AVERAGE ENCODER
   
-  public DriveToEncoderDistance(double Distance, double Intensity) {
+  public DriveToEncoderDistance(double DistanceInInches, double Intensity) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    //distance in inches
+    //1 in = 14.3 ticks
     requires(Robot.drive);
-    this.targetDistance = Distance;
+    this.targetDistance = DistanceInInches;
     this.targetIntensity = Intensity;
   }
 
@@ -39,31 +41,47 @@ public class DriveToEncoderDistance extends Command {
   @Override
   protected void execute() {
     double yaw = Robot.vexGyro.getAngle();
-    double yawIntensity = yaw / 50;
     
-    double averageDistance = ((Robot.drive.getLeftEncoder() + Robot.drive.getRightEncoder())) / 2);
+    if (yaw > 360)
+    {
+      System.out.println ("Correcting reported yaw of:" + yaw ) ;
+        yaw = yaw - 360 ;
+    }
+    else if (yaw < -360)
+    {
+      System.out.println ("Correcting reported yaw of:" + yaw ) ;
+      yaw = yaw + 360 ;
+    }
+    double yawIntensity = yaw / 100;
     
-    double distanceRemaining = targetDistance - averageDistance;
+    double averageDistance = ((Robot.drive.getLeftEncoder() + Robot.drive.getRightEncoder()) / 2);
+    //assume 180 ticks for 1 rotation
+    //for 3 feet, wheel diameter is 4 in
+    //2.86 rotations
+    double distanceRemaining = targetDistance - (averageDistance/14.3);
 
-    System.out.println("Distance Remaining: " + distanceRemaining + " Encoder Average: " + averageDistance);
+    System.out.println("Distance Remaining: " + distanceRemaining + " Encoder Average: " + averageDistance + " Yaw deg:" + yaw);
 
     Robot.drive.setLeft(targetIntensity - yawIntensity);
     Robot.drive.setRight(targetIntensity + yawIntensity);
     if (distanceRemaining < 0)
     {
       finished = true;
-  	}
+    }
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    
     return finished;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    System.out.println("drive to is finished");
     Robot.drive.setLeft(0);
     Robot.drive.setRight(0);
   }
