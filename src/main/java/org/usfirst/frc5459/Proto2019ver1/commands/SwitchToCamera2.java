@@ -25,6 +25,7 @@ public class SwitchToCamera2 extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.server.free();
     Robot.server.setSource(Robot.camera2);
   }
 
