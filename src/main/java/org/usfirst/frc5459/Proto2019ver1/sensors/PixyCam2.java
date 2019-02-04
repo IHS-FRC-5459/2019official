@@ -106,4 +106,71 @@ public class PixyCam2 {
 
         return retvect ;
     }
+
+    public static PixyCamBlocks [] getBlocks(){
+        // Send and received packet for operation 32, GetBlocks.
+        byte[] blockParam = new byte[2];
+
+        blockParam[0] = (byte)255;
+        blockParam[1] = (byte)255;
+
+        byte [] retval = sendAndRecieve(32, blockParam, 32) ;
+
+        // If operation succeeds, then majot version is in output array 
+        // element 8 and minor is in output array element 9
+
+        int nBlocks = retval [3] /14 ;
+
+        PixyCamBlocks [] retblocks = new PixyCamBlocks [nBlocks] ;
+
+        for (int i = 0 ; i < nBlocks; i++)
+        {
+            int offset = 14 * i ;
+
+            //Signature Color of block
+            int SignatureNumber = Byte.toUnsignedInt ( retval [7 + offset] );
+            SignatureNumber <<= 8 ;
+            SignatureNumber += Byte.toUnsignedInt (retval [6 + offset]) ;
+
+            //X value of Center of block
+            int XCenter = Byte.toUnsignedInt(retval [9 + offset]) ;
+            XCenter <<= 8 ;
+            XCenter += Byte.toUnsignedInt(retval [8 + offset]) ;
+
+            //Y value of Center of Block
+            int YCenter = Byte.toUnsignedInt(retval [11 + offset]) ;
+            YCenter <<= 8 ;
+            YCenter += Byte.toUnsignedInt(retval [10 + offset]) ;
+
+            //Width of block
+            int Width = Byte.toUnsignedInt(retval [13 + offset]) ;
+            Width <<= 8 ;
+            Width += Byte.toUnsignedInt(retval [12 + offset]) ;
+            
+            //Height of block
+            int Height = Byte.toUnsignedInt(retval [15 + offset]) ;
+            Height <<= 8 ;
+            Height += Byte.toUnsignedInt(retval [14 + offset]) ;
+        
+            //Angle of Color in degrees
+            int AngleOfColor = Byte.toUnsignedInt(retval [17 + offset]) ;
+            AngleOfColor <<= 8 ;
+            AngleOfColor += Byte.toUnsignedInt(retval [16 + offset]) ;
+
+            //Tracking index of block
+            int TrackingIndex = Byte.toUnsignedInt(retval [18 + offset]) ;
+
+            //Number of frames this block has been traced
+            int Age = Byte.toUnsignedInt(retval [19 + offset]) ;
+
+            // Allocate new pixyCamBlock, place in output array
+
+            retblocks [i] = new PixyCamBlocks(SignatureNumber, XCenter, YCenter, 
+                Width, Height, AngleOfColor, TrackingIndex, Age) ;
+
+        }
+
+        return retblocks ;
+        
+    }
 }
