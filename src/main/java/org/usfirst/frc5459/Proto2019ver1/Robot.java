@@ -22,6 +22,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc5459.Proto2019ver1.commands.*;
+import org.usfirst.frc5459.Proto2019ver1.sensors.PixyCam2;
+import org.usfirst.frc5459.Proto2019ver1.sensors.PixyCamBlocks;
 import org.usfirst.frc5459.Proto2019ver1.subsystems.*;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
@@ -106,7 +108,7 @@ public class Robot extends TimedRobot {
         autonomousCommand = chooser.getSelected();
         // schedule the autonomous command (example)
         
-        autonomousCommand = new TurnToGyroCommand(-1);
+        //autonomousCommand = new TurnToGyroCommand(-1);
         if (autonomousCommand != null) autonomousCommand.start();
     }
 
@@ -116,7 +118,15 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-
+        
+        PixyCamBlocks[] blocks =  PixyCam2.getBlocks();
+        if(blocks.length != 2){
+            System.out.println("Error: " + blocks.length + " Blocks found");
+        }else{
+            int avgHeight = (blocks[0].height + blocks[1].height) / 2;
+            int centerDistance = Math.abs(blocks[0].xCenter - blocks[1].xCenter);
+            System.out.println("Height of blocks: " + avgHeight + " Distance Between: " + centerDistance);
+        }
     }
 
     @Override
@@ -125,9 +135,10 @@ public class Robot extends TimedRobot {
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
+        Robot.drive.setDefaultCommand(new DriveCommand());
         if (autonomousCommand != null) autonomousCommand.cancel();
         System.out.println("teleopInit being called");
-        Robot.drive.setDefaultCommand(new DriveCommand());
+        
     }
 
     /**
