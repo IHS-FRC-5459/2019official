@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc5459.Proto2019ver1.commands.*;
 import org.usfirst.frc5459.Proto2019ver1.sensors.PixyCam2;
-import org.usfirst.frc5459.Proto2019ver1.sensors.PixyCamBlocks;
+import org.usfirst.frc5459.Proto2019ver1.sensors.PixyCamBlock;
 import org.usfirst.frc5459.Proto2019ver1.subsystems.*;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
@@ -76,7 +76,7 @@ public class Robot extends TimedRobot {
         camera1.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
         camera2.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
         server = CameraServer.getInstance().getServer();
-        flipped = false;
+        flipped = true;
         server.setSource(camera1);
         vexGyro = new AnalogGyro(0);
         vexGyro.setSensitivity(.00175);
@@ -121,15 +121,23 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        
-        PixyCamBlocks[] blocks =  PixyCam2.getBlocks();
-        if(blocks.length != 2){
-            System.out.println("Error: " + blocks.length + " Blocks found");
-        }else{
+        /*
+        Getting multiple blocks
+        if (blocks != null)
+        {
+            if(blocks.length != 2){
+                System.out.println("Error: " + blocks.length + " Blocks found");
+            }else{
             int avgHeight = (blocks[0].height + blocks[1].height) / 2;
             int centerDistance = Math.abs(blocks[0].xCenter - blocks[1].xCenter);
             System.out.println("Height of blocks: " + avgHeight + " Distance Between: " + centerDistance);
+            }
         }
+        else
+        {
+            System.out.println ("Getblocks null") ;
+        }
+        */
     }
 
     @Override

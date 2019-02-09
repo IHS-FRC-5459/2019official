@@ -8,6 +8,7 @@
 package org.usfirst.frc5459.Proto2019ver1.sensors;
 
 import edu.wpi.first.wpilibj.I2C;
+
 /**
  * Add your docs here.
  */
@@ -107,21 +108,32 @@ public class PixyCam2 {
         return retvect ;
     }
 
-    public static PixyCamBlocks [] getBlocks(){
+    public static PixyCamBlock [] getBlocks(){
         // Send and received packet for operation 32, GetBlocks.
         byte[] blockParam = new byte[2];
 
         blockParam[0] = (byte)255;
         blockParam[1] = (byte)255;
 
-        byte [] retval = sendAndRecieve(32, blockParam, 32) ;
+        byte [] retval = sendAndRecieve(32, blockParam, 64) ;
 
-        // If operation succeeds, then majot version is in output array 
-        // element 8 and minor is in output array element 9
+        // Check return success value
 
+        if (retval[2] != 33)
+        {
+//            System.out.println ("Getblocks error:" + Byte.toUnsignedInt(retval[2]));
+            return null ;
+        }
+       
         int nBlocks = retval [3] /14 ;
 
-        PixyCamBlocks [] retblocks = new PixyCamBlocks [nBlocks] ;
+        if (nBlocks > 2)
+        {
+            System.out.println("nBlocks = " + nBlocks) ;
+            nBlocks = 0 ;
+        }
+
+        PixyCamBlock [] retblocks = new PixyCamBlock [nBlocks] ;
 
         for (int i = 0 ; i < nBlocks; i++)
         {
@@ -165,12 +177,46 @@ public class PixyCam2 {
 
             // Allocate new pixyCamBlock, place in output array
 
-            retblocks [i] = new PixyCamBlocks(SignatureNumber, XCenter, YCenter, 
+            retblocks [i] = new PixyCamBlock (SignatureNumber, XCenter, YCenter, 
                 Width, Height, AngleOfColor, TrackingIndex, Age) ;
 
+                
         }
+  
 
         return retblocks ;
         
     }
+
+    public static PixyCamBlock GetCentermostBlock ()
+    {
+        PixyCamBlock [] AllBlocks = getBlocks() ;
+     
+
+        if (AllBlocks == null){
+          return null ;
+        }
+
+        if (AllBlocks.length == 0)
+        {
+            System.out.println("AllBlocks.length = 0") ;
+            return null ;
+
+        }
+          int minDistanceFromCenter = 160;
+          int centerMostIndex = 0;
+        
+            for(int i = 0; i < AllBlocks.length; i++){
+                int thisDistance = Math.abs(160 - AllBlocks[i].xCenter);
+                if(thisDistance < minDistanceFromCenter){
+                    centerMostIndex = i;
+                    minDistanceFromCenter = thisDistance;
+                }
+            } 
+    
+
+        return AllBlocks [centerMostIndex] ;
+    }
+
+   
 }
