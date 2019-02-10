@@ -42,6 +42,7 @@ public class DriveToEncoderDistance extends Command {
   protected void execute() {
     double yaw = Robot.vexGyro.getAngle();
     
+
     if (yaw > 360)
     {
       System.out.println ("Correcting reported yaw of:" + yaw ) ;
@@ -53,8 +54,9 @@ public class DriveToEncoderDistance extends Command {
       yaw = yaw + 360 ;
     }
     double yawIntensity = yaw / 100;
-    
+
     double averageDistance = ((Robot.drive.getLeftEncoder() + Robot.drive.getRightEncoder()) / 2);
+
     //assume 180 ticks for 1 rotation
     //for 3 feet, wheel diameter is 4 in
     //2.86 rotations
