@@ -43,12 +43,13 @@ public class DriveCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        if(Math.abs(Robot.oi.joystick1.getY())   >= .03){
-        Robot.drive.setLeft(Robot.oi.joystick1.getY());
+        if(Math.abs(Robot.oi.joystick1.getY())   >= .05){
+        
+        Robot.drive.setLeft(Math.pow(Robot.oi.joystick1.getY(), 3));
         }
         //System.out.println("joystick 1 is: "+Robot.oi.joystick1.getY());
-        if(Math.abs(Robot.oi.joystick2.getY()) >= .03){
-            Robot.drive.setRight(Robot.oi.joystick2.getY());
+        if(Math.abs(Robot.oi.joystick2.getY()) >= .05){
+            Robot.drive.setRight(Math.pow(Robot.oi.joystick2.getY(),3));
             }
         
     }

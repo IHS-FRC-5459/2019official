@@ -66,8 +66,8 @@ public class AutoHatchAssist extends Command {
 
       double intensityIncrement = xDisplacement * 0.002 ;
 
-      Robot.drive.setLeft (.15 + intensityIncrement) ;
-      Robot.drive.setRight(.15 - intensityIncrement);
+      Robot.drive.setLeft (.25 + intensityIncrement) ;
+      Robot.drive.setRight(.25 - intensityIncrement);
 
       System.out.println ("Desired X=" + desiredX + " Block X=" + centerBlock.xCenter +
                           " Block y=" + centerBlock.yCenter + " Intensity Increment=" + intensityIncrement);
