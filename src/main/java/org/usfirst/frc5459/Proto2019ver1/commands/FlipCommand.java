@@ -23,7 +23,6 @@ public class FlipCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("this is flip command!, flipped is: "+ Robot.flipped);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -31,10 +30,14 @@ public class FlipCommand extends Command {
   protected void execute() {
     if(Robot.flipped == true){
       Robot.flipped = false;
+      System.out.println("this is flip command!, flipped is now: "+ Robot.flipped);
+ 
       SwitchToCamera2.start();
     } 
     else  {
       Robot.flipped = true;
+      System.out.println("this is flip command!, flipped is: now:"+ Robot.flipped);
+ 
       SwitchToCamera1.start();
     } 
     

@@ -11,6 +11,8 @@
 
 package org.usfirst.frc5459.Proto2019ver1.commands;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc5459.Proto2019ver1.Robot;
 
 /**
@@ -43,6 +45,8 @@ public class DriveCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
+
+    /*
         if(Math.abs(Robot.oi.joystick1.getY())   >= .05){
         
         Robot.drive.setLeft(Math.pow(Robot.oi.joystick1.getY(), 3));
@@ -51,8 +55,22 @@ public class DriveCommand extends Command {
         if(Math.abs(Robot.oi.joystick2.getY()) >= .05){
             Robot.drive.setRight(Math.pow(Robot.oi.joystick2.getY(),3));
             }
-        
+*/         
+            double j1, j2 ;
+
+            j1 = Robot.oi.joystick1.getY() ;
+            j2 = Robot.oi.joystick2.getY() ;
+
+            Robot.drive.setLeft(j1);
+            Robot.drive.setRight(j2);
+
+            SmartDashboard.putString ("Joysticks",   "1:" + j1 + " 2:" +j2);
+}
+//System.out.println("joystick 1 is: "+Robot.oi.joystick1.getY());
+/*if(Math.abs(Robot.oi.joystick2.getY()) >= .05){
+    Robot.drive.setRight(Math.pow(Robot.oi.joystick2.getY(),3));
     }
+    }*/
 
     // Make this return true when this Command no longer needs to run execute()
     @Override

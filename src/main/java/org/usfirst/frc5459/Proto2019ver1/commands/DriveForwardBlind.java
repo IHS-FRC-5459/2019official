@@ -32,6 +32,7 @@ public class DriveForwardBlind extends Command {
   @Override
   protected void initialize() {
     Robot.drive.resetEncoders();
+    Robot.vexGyro.reset();
     System.out.println("going to forwardBlind");
     
     finished = false;
@@ -64,8 +65,8 @@ public class DriveForwardBlind extends Command {
 
     System.out.println(" Encoder Average: " + averageDistance + " Yaw deg:" + yaw);
 
-    Robot.drive.setLeft(targetIntensity - yawIntensity);
-    Robot.drive.setRight(targetIntensity + yawIntensity);
+    Robot.drive.setLeft(-1.0*(targetIntensity - yawIntensity));
+    Robot.drive.setRight(-1.0*(targetIntensity + yawIntensity));
     // if (distanceRemaining < 0)
     // {
     //   finished = true;

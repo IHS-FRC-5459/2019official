@@ -86,7 +86,7 @@ public class Drive extends Subsystem {
         drivetrain.setSensitivity(0.5);
         drivetrain.setMaxOutput(1.0);
 
-        drivetrain.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
+     //   drivetrain.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
         eastEncoder = new Encoder(0, 1, false);
         westEncoder = new Encoder(2, 3, true);
         //when flipped is false, east is right and clockwise
