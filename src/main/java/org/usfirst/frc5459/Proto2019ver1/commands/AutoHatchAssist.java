@@ -66,8 +66,8 @@ public class AutoHatchAssist extends Command {
 
       double intensityIncrement = xDisplacement * 0.002 ;
 
-      Robot.drive.setLeft (.25 + intensityIncrement) ;
-      Robot.drive.setRight(.25 - intensityIncrement);
+      Robot.drive.setLeft (-1.0 * (.25 + intensityIncrement));
+      Robot.drive.setRight(-1.0 * (.25 - intensityIncrement));
 
       System.out.println ("Desired X=" + desiredX + " Block X=" + centerBlock.xCenter +
                           " Block y=" + centerBlock.yCenter + " Intensity Increment=" + intensityIncrement);
@@ -82,6 +82,7 @@ public class AutoHatchAssist extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+
     Robot.drive.setLeft(0);
     Robot.drive.setRight(0);
   }
